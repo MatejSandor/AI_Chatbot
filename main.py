@@ -21,7 +21,7 @@ for intent in data["intents"]:
     for pattern in intent["patterns"]:
         wrds = nltk.word_tokenize(pattern)
         words.extend(wrds)
-        docs_x.append(pattern)
+        docs_x.append(wrds)
         docs_y.append(intent["tag"])
 
     if intent["tag"] not in labels:
@@ -40,7 +40,7 @@ out_empty = [0 for _ in range(len(labels))]
 for x, doc in enumerate(docs_x):
     bag = []
 
-    wrds = [stemmer.stem(w) for w in doc]
+    wrds = [stemmer.stem(w) for w in doc if w != "?"]
     for w in words:
         if w in wrds:
             bag.append(1)
